@@ -40,7 +40,6 @@
   become: true
 - name: init password jenkin
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-  changed_when: false
   register: result
   become: true
 - name: print init password jenkins
