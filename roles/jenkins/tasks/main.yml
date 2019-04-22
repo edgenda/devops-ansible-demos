@@ -13,6 +13,11 @@
     name: java-1.8.0-openjdk
     state: present
   become: true
+- name: download jenkins repo
+  get_url:
+    url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+    dest: /etc/yum.repos.d/jenkins.repo
+  become: true
 - name: import jenkins key
   rpm_key:
     state: present
