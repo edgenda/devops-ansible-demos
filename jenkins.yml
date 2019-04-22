@@ -1,7 +1,6 @@
-- name: Configure CI server
-  hosts: Host02
-  tasks: 
-    roles:
-      - import_roles: 
-        name: git
-
+- name: Install Jenkins
+  hosts: host02
+  become: true
+  tasks:
+  - import_role:
+      name: jenkins
