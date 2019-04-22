@@ -1,7 +1,0 @@
-- name: Configure CI server
-  hosts: Host02
-  tasks:
-    - name: install git
-      yum:
-        name=git
-        state=present

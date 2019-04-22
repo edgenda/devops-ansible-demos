@@ -1,0 +1,7 @@
+- name: Configure CI server
+  hosts: Host02
+  tasks: 
+    roles:
+      - import_roles: 
+        name: git
+
