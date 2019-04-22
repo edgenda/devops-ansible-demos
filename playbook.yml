@@ -3,5 +3,5 @@
   tasks:
     - name: install git
       yum:
-        name=git
-        state=present
+        name: git
+        state: present
