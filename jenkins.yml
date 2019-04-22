@@ -1,5 +1,5 @@
 - name: Install Jenkins
-  hosts: host02
+  hosts: host04
   become: true
   tasks:
   - import_role:
