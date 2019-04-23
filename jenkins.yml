@@ -1,5 +1,5 @@
-- name: Install Jenkins
-  hosts: host03
+- name: Disable SELinux
+  hosts: all
   become: true
   tasks:
     - name: disable selinux
@@ -7,6 +7,23 @@
         state: disabled
       become: true
       notify: "reboot virtual machine"
+  handlers:
+    - name: reboot vm
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0
+      listen: "reboot virtual machine"
+    - name: wait reboot
+      wait_for_connection:
+        connect_timeout: "20"
+        sleep: "5"
+        delay: "20"
+        timeout: "300"
+      listen: "reboot virtual machine"
+- name: Install Jenkins
+  hosts: host05
+  become: true
+  tasks:
       #- name: reboot
       #shell: "sleep 5 && reboot"
       #async: 1
@@ -69,16 +86,4 @@
     - name: print init password jenkins
       debug:
         var: result.stdout
-  handlers:
-    - name: reboot vm
-      shell: "sleep 5 && reboot"
-      async: 1
-      poll: 0
-      listen: "reboot virtual machine"
-    - name: wait reboot
-      wait_for_connection:
-        connect_timeout: "20"
-        sleep: "5"
-        delay: "20"
-        timeout: "300"
-      listen: "reboot virtual machine"
+
