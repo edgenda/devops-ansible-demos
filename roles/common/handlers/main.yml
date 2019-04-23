@@ -3,8 +3,7 @@
   async: 1
   poll: 0
   when: task_result is changed
-  debug: 
-    msg: "System {{ inventory_hostname }} with uuid {{ ansible_product_uuid }} is rebooting"
+  notify: wait_reboot
 - name: wait_reboot
   wait_for_connection:
       connect_timeout: 20
@@ -12,5 +11,3 @@
       delay: 20
       timeout: 300
   when: task_result is changed
-  debug: 
-    msg: "System {{ inventory_hostname }} with uuid {{ ansible_product_uuid }} is waiting for connection"
