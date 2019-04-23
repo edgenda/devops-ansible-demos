@@ -1,7 +1,24 @@
 - name: Install Jenkins
-  hosts: host04
+  hosts: host03
   become: true
   tasks:
+    - name: disable selinux
+      selinux: 
+        state: disabled
+      become: true
+      notify: "reboot virtual machine"
+      #- name: reboot
+      #shell: "sleep 5 && reboot"
+      #async: 1
+      #poll: 0
+      #when: task_result is changed
+      #- name: wait_reboot
+      #wait_for_connection:
+      #  connect_timeout: "20"
+      #  sleep: "5"
+      #  delay: "20"
+      #  timeout: "300"
+      #when: task_result is changed
     - name: install git
       yum:
         name: git
@@ -45,7 +62,23 @@
     - name: init password jenkin
       shell: cat /var/lib/jenkins/secrets/initialAdminPassword
       register: result
+      retries: 5
+      delay: 10
+      until: result is succeeded
       become: true
     - name: print init password jenkins
       debug:
         var: result.stdout
+  handlers:
+    - name: reboot vm
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0
+      listen: "reboot virtual machine"
+    - name: wait reboot
+      wait_for_connection:
+        connect_timeout: "20"
+        sleep: "5"
+        delay: "20"
+        timeout: "300"
+      listen: "reboot virtual machine"
