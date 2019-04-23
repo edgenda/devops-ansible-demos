@@ -1,0 +1,10 @@
+- name: disable selinux
+  selinux: 
+    state: disabled
+  become: true
+  register: task_result
+- name: install tar
+  yum:
+    name: tar
+    state: present
+  become: true

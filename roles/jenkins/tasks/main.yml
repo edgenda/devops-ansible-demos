@@ -1,8 +1,3 @@
-- name: install git
-  yum:
-    name: git
-    state: present
-  become: true
 - name: install wget
   yum:
     name: wget
@@ -40,6 +35,8 @@
   become: true
 - name: init password jenkin
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  retries: 5
+  delay: 10
   register: result
   become: true
 - name: print init password jenkins

@@ -1,0 +1,6 @@
+- name: Install Nexus
+  hosts: host04
+  become: true
+  tasks:
+  - import_role:
+      name: ansible-nexus3-oss
