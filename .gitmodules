@@ -1,0 +1,3 @@
+[submodule "roles/ansible-nexus3-oss"]
+	path = roles/ansible-nexus3-oss
+	url = https://github.com/savoirfairelinux/ansible-nexus3-oss.git
