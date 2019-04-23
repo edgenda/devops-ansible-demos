@@ -3,6 +3,18 @@
     name: wget
     state: present
   become: true
+- name: reboot
+  when: task_result is changed
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+- name: wait_reboot
+  when: task_result is changed
+  wait_for_connection:
+      connect_timeout: "20"
+      sleep: "5"
+      delay: "20"
+      timeout: "300"
 - name: disable selinux
   selinux: 
     state: disabled
