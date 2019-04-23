@@ -1,5 +1,5 @@
 - name: Install Nexus
-  hosts: host04
+  hosts: host05
   become: true
   tasks:
   - import_role:
