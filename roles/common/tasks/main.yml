@@ -8,7 +8,6 @@
     state: disabled
   become: true
   register: task_result
-  notify: "reboot"
 - name: install tar
   yum:
     name: tar
