@@ -28,6 +28,7 @@
   retries: 5
   delay: 10
   register: result
+  until: result|succeeded
   become: true
 - name: print init password jenkins
   debug:
