@@ -3,6 +3,10 @@
   become: true
   tasks:
   - import_role:
+      name: common
+  - import_role:
+      name: java
+  - import_role:
       name: jenkins
 - name: Install Nexus
   hosts: host05
