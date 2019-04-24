@@ -12,6 +12,4 @@
   selinux: 
     state: disabled
   become: true
-- name: restart vms
-  command: echo "this task will restart the vms"
   notify: "reboot vm"
