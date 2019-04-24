@@ -11,5 +11,4 @@
 - name: disable selinux
   selinux: 
     state: disabled
-  become: true
   notify: "reboot vm"
