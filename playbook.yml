@@ -16,7 +16,7 @@
   hosts: host03
   become: true
   tasks:
-  - import_role:
+  - include_role:
       name: nginx
     vars:
       backend_port: "{{item.port}}"
