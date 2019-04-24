@@ -1,3 +1,6 @@
+- name: Print Platform
+  debug:
+    var: ansible_distribution
 - name: install wget
   yum:
     name: wget
