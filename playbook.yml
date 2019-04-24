@@ -17,12 +17,12 @@
   become: true
   tasks:
   - import_role:
-      vars:
-            backend_port: "{{item.port}}"
-            backend_name: "{{item.name}}"
-            backend_host: "{{item.host}}"
-            listen: "{{item.listen}}"
       name: nginx
+    vars:
+      backend_port: "{{item.port}}"
+      backend_name: "{{item.name}}"
+      backend_host: "{{item.host}}"
+      listen: "{{item.listen}}"
     loop:
       - { name: 'host04', host: 'host04', listen: 7777, port: 8080 }
       - { name: 'host05', host: 'host05', listen: 8888, port: 8080 }
