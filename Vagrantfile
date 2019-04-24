@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     end
   end
   config.vm.define "host06" do |host|
-    host.vm.box = "ubuntu/trusty64 box"
+    host.vm.box = "ubuntu/trusty64"
     host.vm.network "public_network", bridge: "???"
     host.vm.network "private_network", ip: "192.168.10.6"
     (3..7).each do |i|
