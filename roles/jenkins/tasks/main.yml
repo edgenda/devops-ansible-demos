@@ -30,11 +30,12 @@
     enabled: true
   become: true
 - name: check jenkins is up
-  shell: curl localhost:8080
+  get_url:
+    url: http://localhost:8080
   retries: 5
   delay: 10
-  register: curl_result
-  until: curl_result is succeeded
+  register: get_result
+  until: get_result is succeeded
   become: true  
 - name: init password jenkin
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
