@@ -13,4 +13,4 @@
   - import_role:
       name: java
   - import_role:
-      name: ansible-nexus3-oss
+      name: nexus
