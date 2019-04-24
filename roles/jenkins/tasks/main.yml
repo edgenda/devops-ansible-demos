@@ -26,6 +26,7 @@
 - name: check jenkins is up
   get_url:
     url: http://localhost:8080
+    dest: /dev/null
   retries: 5
   delay: 10
   register: get_result

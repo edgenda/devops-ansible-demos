@@ -1,9 +1,12 @@
+- name: Apply Common
+  hosts: all
+  tasks:
+  - import_role:
+      name: common
 - name: Install Jenkins
   hosts: host04
   become: true
   tasks:
-  - import_role:
-      name: common
   - import_role:
       name: java
   - import_role:
@@ -12,8 +15,6 @@
   hosts: host05
   become: true
   tasks:
-  - import_role:
-      name: common
   - import_role:
       name: java
   - import_role:
