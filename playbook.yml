@@ -18,10 +18,10 @@
   tasks:
   - import_role:
       vars:
-            backend_port: {{item.port}}
-            backend_name: {{item.name}}
-            backend_host: {{item.host}}
-            listen: {{item.listen}}
+            backend_port: "{{item.port}}"
+            backend_name: "{{item.name}}"
+            backend_host: "{{item.host}}"
+            listen: "{{item.listen}}"
       name: nginx
     loop:
       - { name: 'host04', host: 'host04', listen: 7777, port: 8080 }
