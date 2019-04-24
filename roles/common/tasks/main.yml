@@ -1,32 +1,37 @@
-- name: Print Platform
+- name: Print Ubuntu Platform
   debug:
     var: ansible_distribution
+  when: ansible_distribution == "Ubuntu"
+- name: Print CentOS Platform
+  debug:
+    var: ansible_distribution
+  when: ansible_distribution == "CentOS"
 - name: install wget
   yum:
     name: wget
     state: present
-  when: ansible_distribution == "Centos"
+  when: ansible_distribution == "CentOS"
   become: true
 - name: install tar
   yum:
     name: tar
     state: present
   become: true
-  when: ansible_distribution == "Centos"
+  when: ansible_distribution == "CentOS"
 - name: install wget on debian
   apt:
     name: wget
     state: present
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Ubuntu"
   become: true
 - name: install tar on debian
   apt:
     name: tar
     state: present
   become: true
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Ubuntu"
 - name: disable selinux
   selinux: 
     state: disabled
-  when: ansible_distribution == "Centos"
+  when: ansible_distribution == "CentOS"
   notify: "reboot vm"
