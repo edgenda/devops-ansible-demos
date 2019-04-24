@@ -3,6 +3,7 @@
   shell: "sleep 5 && reboot"
   async: 1
   poll: 0
+  listen: "reboot vm"
 - name: wait_reboot
   when: task_result is changed
   wait_for_connection:
@@ -10,3 +11,4 @@
       sleep: 5
       delay: 20
       timeout: 300
+  listen: "reboot vm"

@@ -12,16 +12,4 @@
   selinux: 
     state: disabled
   become: true
-  register: task_result
-- name: reboot
-  shell: "sleep 5 && reboot"
-  async: 1
-  poll: 0
-  when: task_result is changed
-- name: wait_reboot
-  wait_for_connection:
-      connect_timeout: "20"
-      sleep: "5"
-      delay: "20"
-      timeout: "300"
-  when: task_result is changed
+  notify: "reboot vm"

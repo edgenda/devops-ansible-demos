@@ -1,8 +1,0 @@
-- name: Install Jenkins
-  hosts: host04
-  become: true
-  tasks:
-  - import_role:
-      name: jenkins
-  handlers:
-
