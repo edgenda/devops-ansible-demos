@@ -6,7 +6,7 @@
   when: ansible_distribution == "CentOS"
 - name: install openjdk
   apt:
-    name: openjdk-8-jre
+    name: openjdk-8-jdk
     state: present
   become: true
   when: ansible_distribution == "Ubuntu"
