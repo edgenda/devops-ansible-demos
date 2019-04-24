@@ -12,4 +12,14 @@ Vagrant.configure("2") do |config|
       end
     end
   end
+  config.vm.define "host06" do |host|
+    host.vm.box = "ubuntu/trusty64 box"
+    host.vm.network "public_network", bridge: "???"
+    host.vm.network "private_network", ip: "192.168.10.6"
+    (3..7).each do |i|
+      host.vm.provision "shell", inline: <<-SHELL
+        sed -i '$ a 192.168.10.#{i} host0#{i}' /etc/hosts
+      SHELL
+    end
+  end
 end

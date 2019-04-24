@@ -2,13 +2,28 @@
   yum:
     name: wget
     state: present
+  when: ansible_distribution == "Centos"
   become: true
 - name: install tar
   yum:
     name: tar
     state: present
   become: true
+  when: ansible_distribution == "Centos"
+- name: install wget on debian
+  apt:
+    name: wget
+    state: present
+  when: ansible_distribution == "Debian"
+  become: true
+- name: install tar on debian
+  apt:
+    name: tar
+    state: present
+  become: true
+  when: ansible_distribution == "Debian"
 - name: disable selinux
   selinux: 
     state: disabled
+  when: ansible_distribution == "Centos"
   notify: "reboot vm"
