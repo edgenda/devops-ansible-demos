@@ -5,7 +5,7 @@
     - name: disable selinux
       selinux: 
         state: disabled
-      become: true
+      register: task_result
       notify: "reboot virtual machine"
   handlers:
     - name: reboot vm
@@ -66,12 +66,13 @@
       become: true
     - name: init password jenkin
       shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-      register: result
+      register: foobar
       retries: 5
       delay: 10
-      until: result is succeeded
+      until: foobar is succeeded
       become: true
     - name: print init password jenkins
       debug:
-        var: result.stdout
+        var: foobar.stdout
+      when: foobar is succeeded
 
