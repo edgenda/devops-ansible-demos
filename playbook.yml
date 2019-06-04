@@ -3,9 +3,31 @@
   tasks:
   - import_role:
       name: common
-- name: Install Jenkins
+  - shell: "echo reboot"
+    notify: "reboot vm"
+- name: Install Jenkins on Host04
   hosts: host04
   become: true
   tasks:
   - import_role:
       name: jenkins
+- name: Install Jenkins
+  hosts: host06
+  become: true
+  tasks:
+  - import_role:
+      name: jenkins
+- name: Install NGINX reverse
+  hosts: host03
+  become: true
+  tasks:
+  - include_role:
+      name: nginx
+    vars:
+      backend_port: "{{item.port}}"
+      backend_name: "{{item.name}}"
+      backend_host: "{{item.host}}"
+      listen: "{{item.listen}}"
+    loop:
+      - { name: "host04", host: "host04", listen: 7777, port: 8080 }
+      - { name: "host06", host: "host06", listen: 9090, port: 8080 }

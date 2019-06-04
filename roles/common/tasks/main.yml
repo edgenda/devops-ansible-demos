@@ -1,15 +1,30 @@
 - name: install wget
+  apt:
+    name: wget
+    state: present
+  become: true
+  when: ansible_distribution == "Ubuntu"
+- name: install wget
   yum:
     name: wget
     state: present
   become: true
+  when: ansible_distribution == "CentOS"
+- name: install tar
+  apt:
+    name: wget
+    state: present
+  become: true
+  when: ansible_distribution == "Ubuntu"
 - name: install tar
   yum:
     name: tar
     state: present
   become: true
+  when: ansible_distribution == "CentOS"
 - name: disable selinux
   selinux: 
     state: disabled
   become: true
   notify: "reboot vm"
+  when: ansible_distribution == "CentOS"

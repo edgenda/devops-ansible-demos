@@ -1,44 +1,6 @@
-- name: download jenkins repo
-  get_url:
-    url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
-    dest: /etc/yum.repos.d/jenkins.repo
-  become: true
-- name: import jenkins key
-  rpm_key:
-    state: present
-    key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
-  become: true
-- name: install jenkins
-  yum:
-    name: jenkins
-    state: present
-  become: true
-- name: start jenkins
-  systemd:
-    name: jenkins
-    state: started
-  become: true
-- name: enable jenkins
-  systemd:
-    name: jenkins
-    enabled: true
-  become: true
-- name: check jenkins is up
-  get_url:
-    url: http://localhost:8080
-    dest: /dev/null
-  retries: 5
-  delay: 10
-  register: get_result
-  until: get_result is succeeded
-  become: true  
-- name: init password jenkin
-  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-  retries: 5
-  delay: 10
-  register: result
-  until: result is succeeded
-  become: true
-- name: print init password jenkins
-  debug:
-    var: result.stdout
+- name: install jenkins on CentOS
+  import_tasks: redhat.yml
+  when: ansible_distribution == "CentOS"
+- name: install jenkins on Ubuntu
+  import_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"

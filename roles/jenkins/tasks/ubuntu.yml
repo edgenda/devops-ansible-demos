@@ -1,0 +1,40 @@
+- name: install key  
+  apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins.io.key
+    state: present
+  retries: 5
+  delay: 10
+  register: result
+  until: result is succeeded  
+- name: add repository
+  shell: echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list && touch "/jenkins_list"
+  args:
+    creates: "/jenkins_list"
+- name: install jenkins
+  apt:
+    update-cache: yes
+    name: jenkins
+    state: present
+  retries: 5
+  delay: 10
+  register: result
+  until: result is succeeded
+- name: start jenkins
+  systemd:
+    name: jenkins
+    state: started
+  become: true
+- name: enable jenkins
+  systemd:
+    name: jenkins
+    enabled: true
+  become: true
+- name: init password jenkin
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  retries: 5
+  delay: 10
+  register: result
+  until: result is succeeded
+- name: print init password jenkins
+  debug:
+    var: result.stdout
