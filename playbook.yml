@@ -1,7 +1,11 @@
-- name: Configure CI server
-  hosts: Host02
+- name: Apply Common
+  hosts: all
   tasks:
-    - name: install git
-      yum:
-        name: git
-        state: present
+  - import_role:
+      name: common
+- name: Install Jenkins
+  hosts: host04
+  become: true
+  tasks:
+  - import_role:
+      name: jenkins

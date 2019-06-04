@@ -1,0 +1,12 @@
+- name: reboot
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+  listen: "reboot vm"
+- name: wait_reboot
+  wait_for_connection:
+      connect_timeout: 20
+      sleep: 5
+      delay: 20
+      timeout: 300
+  listen: "reboot vm"

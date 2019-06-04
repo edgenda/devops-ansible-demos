@@ -1,0 +1,15 @@
+- name: install wget
+  yum:
+    name: wget
+    state: present
+  become: true
+- name: install tar
+  yum:
+    name: tar
+    state: present
+  become: true
+- name: disable selinux
+  selinux: 
+    state: disabled
+  become: true
+  notify: "reboot vm"

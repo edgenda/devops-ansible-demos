@@ -1,0 +1,51 @@
+- name: "add nexus group"
+  group:
+    name: "nexus"
+    state: "present"
+- name: "add nexus user"
+  user:
+    name: "nexus"
+    create_home: yes
+    state: "present"
+    comment: "Nexus Account"
+    group: "nexus"
+    shell: "/bin/bash"
+- name: "create nexus directory"
+  file:
+    state: directory
+    owner: nexus
+    group: nexus
+    path: /usr/local/nexus
+- name: extract installation
+  unarchive:
+    src: http://download.sonatype.com/nexus/3/nexus-3.16.1-02-unix.tar.gz
+    dest: /usr/local/nexus
+    remote_src: yes
+  retries: 5
+  delay: 10
+  register: result
+  until: result is succeeded
+- name: "configure nexus.rc"
+  lineinfile:
+    path: /usr/local/nexus/nexus-3.16.1-02/bin/nexus.rc
+    regexp: "^run_as_user="
+    line: 'run_as_user="nexus"'    
+- name: "set proper user and group owner"
+  file:
+    owner: "nexus"
+    group: "nexus"
+    path: /usr/local/nexus
+    mode: 0755
+    recurse: yes
+- name: "copy service file onto target"
+  copy:
+    dest: /etc/systemd/system/nexus.service
+    src: files/nexus.service
+- name: "start nexus service"
+  systemd:
+    name: nexus.service
+    state: started
+- name: "enable nexus service"
+  systemd:
+    name: nexus.service
+    enabled: true
