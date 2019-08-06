@@ -1,0 +1,18 @@
+- name: install epel
+  yum:
+    name: epel-release
+    state: present
+- name: install nginx
+  yum:
+    name: nginx
+    state: present
+- name: enable and start nginx service
+  service:
+    name: nginx
+    state: started
+    enabled: true
+- name: add nginx config
+  template:
+    src: templates/backend.conf
+    dest: "/etc/nginx/conf.d/{{backend_name}}.conf"
+  notify: restart nginx

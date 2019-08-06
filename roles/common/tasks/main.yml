@@ -1,0 +1,19 @@
+---
+- name: run specific CentOS tasks
+  when: ansible_distribution == "CentOS"
+  block: 
+    - name: install tar on centos
+      yum:
+        name: tar
+        state: latest
+    - name: disable SELinux
+      selinux:
+        state: disabled
+      notify: reboot
+- name: run specific Ubuntu tasks
+  when: ansible_distribution == "Ubuntu"
+  block:
+    - name: install tar on ubuntu
+      apt:
+        name: tar
+        state: latest

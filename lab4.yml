@@ -1,0 +1,26 @@
+---
+- name: run common role
+  hosts: all
+  become: true
+  tasks:
+    - import_role: 
+        name: common
+- name: run nginx role
+  hosts: host01
+  become: true
+  tasks:
+    - include_role:
+        name: nginx
+      vars:
+        backend_port: "{{item.port}}"
+        backend_name: "{{item.name}}"
+        backend_host: "{{item.host}}"
+        listen: "{{item.listen}}"
+      loop:
+        - { name: "host02", host: "host02", listen: 8888, port: 8080 }      
+- name: run jenkins role
+  hosts: host02
+  become: true
+  tasks:
+    - import_role: 
+        name: jenkins

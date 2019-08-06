@@ -1,0 +1,13 @@
+---
+- name: reboot
+  listen: reboot
+  shell: "sleep 5 && shutdown -r now"
+  async: 1
+  poll: 0
+- name: wait for reboot
+  listen: reboot
+  wait_for_connection:
+    timeout: 300
+    delay: 10
+    connect_timeout: 5
+    sleep: 10
